@@ -130,7 +130,7 @@ def postenv():
     resp = request.get_json()
     env = json.loads(resp.text)
     db.myenvironment.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp})
-    # return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp}
+    return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp}
 
 @app.route("/post/pose", methods=["POST"])
 def postpose():
@@ -139,7 +139,7 @@ def postpose():
     resp = request.get_json()
     pose = json.loads(resp.text)
     db.mypose.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
-    # return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
+    return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
 
 
 
