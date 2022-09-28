@@ -1,6 +1,7 @@
 import json
 from sqlite3 import Timestamp
 from time import timezone
+from urllib import request
 from flask import Flask, jsonify
 from datetime import date, timedelta, datetime, timezone
 import requests
@@ -124,14 +125,14 @@ def get_pose():
 
 @app.route("/post/env", methods=["POST"])
 def postenv():
-    resp = requests.get_json()
+    resp = request.get_json()
     env = json.loads(resp.text)
     db.mycollection.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': env['timestamp']})
     return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': env['timestamp']}
 
 @app.route("/post/pose", methods=["POST"])
 def postpose():
-    resp = requests.get_json()
+    resp = request.get_json()
     pose = json.loads(resp.text)
     db.mycollection.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': pose['timestamp']})
     return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': pose['timestamp']}
