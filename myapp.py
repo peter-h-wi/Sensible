@@ -125,17 +125,21 @@ def get_pose():
 
 @app.route("/post/env", methods=["POST"])
 def postenv():
+    now = datetime.now()
+    timestamp = datetime.timestamp(now)
     resp = request.get_json()
     env = json.loads(resp.text)
-    db.mycollection.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': env['timestamp']})
-    return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': env['timestamp']}
+    db.mycollection.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp})
+    # return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp}
 
 @app.route("/post/pose", methods=["POST"])
 def postpose():
+    now = datetime.now()
+    timestamp = datetime.timestamp(now)
     resp = request.get_json()
     pose = json.loads(resp.text)
-    db.mycollection.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': pose['timestamp']})
-    return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': pose['timestamp']}
+    db.mycollection.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
+    # return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
 
 
 
