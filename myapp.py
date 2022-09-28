@@ -128,11 +128,6 @@ def postenv():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
     env = request.get_json()
-    # resp = request.get_json()
-    # env = json.loads(resp.text)
-    # db.myenvironment.insert_one({'temp': 65, 'humidity': 33, 'timestamp': timestamp})
-    # return {'temp': 65, 'humidity':33, 'timestamp': timestamp}
-
     db.myenvironment.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp})
     return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp}
 
@@ -141,13 +136,8 @@ def postpose():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
     pose = request.get_json()
-    # pose = json.loads(resp.text)
     db.mypose.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
     return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
-    # db.mypose.insert_one({'presence': "yes", 'pose': "stop", 'timestamp': timestamp})
-    # return {'presence': "yes", 'pose': "stop", 'timestamp': timestamp}
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
