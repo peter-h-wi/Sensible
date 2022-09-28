@@ -129,7 +129,7 @@ def postenv():
     timestamp = datetime.timestamp(now)
     resp = request.get_json()
     env = json.loads(resp.text)
-    db.mycollection.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp})
+    db.myenvironment.insert_one({'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp})
     # return {'temp': env['temp'], 'humidity': env['humidity'], 'timestamp': timestamp}
 
 @app.route("/post/pose", methods=["POST"])
@@ -138,7 +138,7 @@ def postpose():
     timestamp = datetime.timestamp(now)
     resp = request.get_json()
     pose = json.loads(resp.text)
-    db.mycollection.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
+    db.mypose.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
     # return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
 
 
