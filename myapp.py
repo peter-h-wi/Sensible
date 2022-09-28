@@ -2,7 +2,7 @@ import json
 from sqlite3 import Timestamp
 from time import timezone
 from urllib import request
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 from datetime import date, timedelta, datetime, timezone
 import requests
 from pymongo import MongoClient
@@ -127,6 +127,7 @@ def get_pose():
 def postenv():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
+    env = request.get_json()
     # resp = request.get_json()
     # env = json.loads(resp.text)
     db.myenvironment.insert_one({'temp': 65, 'humidity': 33, 'timestamp': timestamp})
@@ -139,12 +140,12 @@ def postenv():
 def postpose():
     now = datetime.now()
     timestamp = datetime.timestamp(now)
-    # resp = request.get_json()
-    # pose = json.loads(resp.text)
-    # db.mypose.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
-    # return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
-    db.mypose.insert_one({'presence': "yes", 'pose': "stop", 'timestamp': timestamp})
-    return {'presence': "yes", 'pose': "stop", 'timestamp': timestamp}
+    resp = request.get_json()
+    pose = json.loads(resp.text)
+    db.mypose.insert_one({'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp})
+    return {'presence': pose['presence'], 'pose': pose['pose'], 'timestamp': timestamp}
+    # db.mypose.insert_one({'presence': "yes", 'pose': "stop", 'timestamp': timestamp})
+    # return {'presence': "yes", 'pose': "stop", 'timestamp': timestamp}
 
 
 
